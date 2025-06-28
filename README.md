@@ -1,34 +1,4 @@
 # Managing-Billing-records
-Architectural Diagram:
-
-
-
-+-------------------+
-|      Users        |
-+-------------------+
-         |
-         v
-+-----------------------------+
-| Azure Blob Storage (Static  |
-| Frontend: HTML/CSS/JS SPA)  |
-+-----------------------------+
-         |
-         v
-+-----------------------------+
-| Azure Functions (API Layer) |
-+-----------------------------+
-         |
-         v
-+-----------------------------+
-|   Azure Cosmos DB (NoSQL)   |
-+-----------------------------+
-
-
-
-
-
-
-
 Cost Optimisation:
 Blob Storage:
 Automate Tiering with Lifecycle Management:
