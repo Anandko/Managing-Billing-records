@@ -27,9 +27,7 @@ Use data compression and deduplication to minimize storage size and costs.
 Monitor and Analyze Usage
 Use Azure Storage inventory and monitoring tools to track usage patterns and identify cost-saving opportunities
 
-
- 
-Azure functions
+**Azure functions**
 Use the Consumption Plan
 The default pay-per-execution model ensures you only pay for what you use; avoid premium or dedicated plans unless necessary for performance or VNET integration.
 Optimize Function Code
@@ -43,68 +41,7 @@ Monitor and Analyze Execution
 Use Application Insights to identify inefficient code or high-frequency triggers that drive up costs.
 Leverage Durable Functions Only When Needed
 Durable Functions can be more expensive due to orchestration overhead; use only for complex workflows.
-Cosmos DB:
-1. Throughput (RU) Optimization
-Use Autoscale Provisioned Throughput:
-Autoscale adjusts RU/s automatically based on demand, scaling up during peaks and scaling down during off-peak times, so you only pay for what you use.
-Shell Example:
-text
-**az cosmosdb sql container throughput update --account-name <account> --database-name <db> --name <container> --max-throughput <maxRU>**
-Right-size RU/s :
-Monitor your actual RU consumption and adjust provisioned throughput to avoid over-provisioning.
-Shell Example: 
-
-Text:
-**az cosmosdb sql container throughput show --account-name <account> --database-name <db> --name <container>**
-
-
-Review Partition Key Design:
-Ensure even data distribution across partitions to avoid “hot” partitions, which can force you to over-provision RU/s for a small subset of data.
-Shell Example:
-text
-**az cosmosdb sql container show --account-name <account> --database-name <db> --name <container> --query "partitionKey"**
-
-
-2. Query and Data Access Optimization
-Optimize Queries:
-Retrieve only necessary fields (project columns).
-Use efficient filters and avoid cross-partition queries when possible.
-Monitor RU charge for queries and refactor high-cost queries.
-Shell Example:
-Text:
-# Use Azure Data Explorer or Azure Portal to review RU charges for queries
-Colocate Related Data:
-Store related entities in the same container to minimize cross-container joins and lower query costs.
-Use Indexing Policies Wisely:
-Exclude large, infrequently queried properties from indexing to reduce write costs and storage overhead.
-Shell Example:
-Text:
-
-**az cosmosdb sql container update --account-name <account> --database-name <db> --name <container> --idx <indexingPolicy.json>**
-
-3. Storage and Data Lifecycle Management
-Implement Time-to-Live (TTL):
-Automatically delete obsolete or expired records to save on storage and improve query performance.
-Shell Example:
-Text:
-**az cosmosdb sql container update --account-name <account> --database-name <db> --name <container> --ttl <seconds>**
-Archive Old Data:
-Move rarely accessed historical records to cheaper storage (e.g., Azure Blob Storage) if regulatory requirements allow.
-Shell Example:
-Export data using Azure Data Factory or custom scripts.
-Data Compression:
-Compress large records before storage to reduce storage costs (implement at the application layer).
-4. Monitoring and Continuous Tuning
-Monitor RU Consumption and Latency:
-Use Azure Monitor and built-in metrics to track usage, identify spikes, and tune accordingly.
-Shell Example:
-Text:
-**az monitor metrics list --resource <cosmosdb-resource-id> --metric "TotalRequestUnits"**
-Analyze Usage Patterns:
-Identify peak and off-peak periods and adjust throughput or autoscale settings accordingly.
-
-
-5. Additional Cost Controls
+**Additional Cost Controls**
 Reserved Capacity:
 If your workload is predictable, purchase reserved capacity for Cosmos DB to get significant discounts.
 Regional Replication:
